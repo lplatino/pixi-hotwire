@@ -1,3 +1,4 @@
+import { Loader } from 'pixi.js';
 import { Application, Sprite } from 'pixi.js'
 
 const app = new Application({
@@ -9,11 +10,20 @@ const app = new Application({
 	height: 480
 });
 
-const clampy: Sprite = Sprite.from("clampy.png");
+Loader.shared.add({url: "elephant.png", name: "myElephant"});
+Loader.shared.add({url: "clampy.png", name: "clampy"});
 
-clampy.anchor.set(0.5);
+Loader.shared.onComplete.add(()=>{
+	const clampy: Sprite = Sprite.from("myElephant");
 
-clampy.x = 300;
-clampy.y = 300;
+	console.log("hola mundo ",clampy.width, clampy.height);
+	
+	//clampy.anchor.set(0);
+	
+	clampy.x = 0;
+	clampy.y = 0;
+	
+	app.stage.addChild(clampy);
+});
 
-app.stage.addChild(clampy);
+Loader.shared.load();
